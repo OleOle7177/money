@@ -3,7 +3,11 @@ require "money/currency"
 require "money/calculated_exchange_rate"
 require "money/exchange_rate"
 
-module Money 	
+module Money 
+	def self.mu
+		puts "mu"
+	end
+	
 	def self.set_base(sym)	 
 		@currency = Currency.find_by_symbol(sym)
 		unless @currency.nil?
