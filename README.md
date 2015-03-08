@@ -1,31 +1,73 @@
 # Money
 
-TODO: Write a gem description
+Гем для конвертации курсов валют
 
-## Installation
+## Установка
 
-Add this line to your application's Gemfile:
+Добавьте эту строку в Gemfile вашего приложения:
 
 ```ruby
-gem 'money'
+gem 'money', git: 'https://github.com/OleOle7177/money' 
+```
+Зависимости гема: 
+
+```ruby
+gem 'nokogiri'
+gem 'rspec'
+```
+Затем запустите bundle: 
+
+    $ bundle install
+
+Далее добавьте в свой проект миграции для базы данных и модели ActiveRecord:
+
+	$ rails g money:install 
+
+Запустите миграции: 
+
+	$ rake db:migrate
+
+Гем готов к работе! 
+
+## Использование 
+
+Гем предоставляет следующий интерфейс для работы с курсами валют: 
+
+1) Установить базовую валюту с кодом 'EUR' для кросс-конвертаций: 
+```ruby
+Money.set_base('EUR')
+```
+2) Узнать текущую базовую валюту: 
+```ruby
+Money.get_base
+```
+3) Для валюты с кодом 'EUR' установить курс со значением 1.5 относительно базовой: 
+```ruby
+Money.set_currency(from: 'USD', rate: 1.5)
+```
+4) Узнать курс валюты с кодом 'USD' относительно базовой на текущий момент: 
+```ruby
+Money.get_currency(from: 'USD')
+```
+5) Узнать курс валюты с кодом 'USD' относительно базовой на момент 7 марта 2015 года 12:00:00: : 
+```ruby
+Money.get_currency(from: 'USD', datetime: '2015-03-07 12:00:00')
+```
+6) Узнать курс валюты 'USD' относительно валюты 'EUR' на текущий момент: 
+```ruby
+Money.get_currency(from: 'USD', to: 'EUR')
+```
+7) Узнать курс валюты 'USD' относительно валюты 'EUR' на момент 7 марта 2015 года 12:00:00: 
+```ruby
+Money.get_currency(from: 'USD', to: 'EUR', datetime: '2015-03-07 12:00:00')
+```
+8) Получить значения курсов валют относительно рубля с сервиса Центробанка РФ: 
+
+	$ rake getcbrates
+
+9) Рассчитать значения курсов валют (на основе данных ЦБ РФ о курсах относительно рубля) относительно текущей базовой валюты: 
+```ruby
+Money.calculate
 ```
 
-And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install money
-
-## Usage
-
-TODO: Write usage instructions here
-
-## Contributing
-
-1. Fork it ( https://github.com/[my-github-username]/money/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Money::VERSION
   spec.authors       = ["OleOle7177"]
   spec.email         = ["ole_@bk.ru"]
-  spec.summary       = %q{Hey}
-  spec.description   = %q{OK}
+  spec.summary       = %q{Гем для конвертации курсов валют}
+  spec.description   = %q{Гем использует данные ЦБ РФ}
   spec.homepage      = ""
   spec.license       = "MIT"
 
