@@ -9,6 +9,6 @@ class CreateCalculatedExchangeRate < ActiveRecord::Migration
     	t.string :created_by
     end
 
-    add_index :calculated_exchange_rates, [:from_currency_id, :created_at], unique: true 
+    add_index :calculated_exchange_rates, [:from_currency_id, :created_at], unique: true, name: 'index_on_calculated_rate' 
   end
 end

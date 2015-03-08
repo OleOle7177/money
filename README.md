@@ -13,7 +13,7 @@ gem 'money', git: 'https://github.com/OleOle7177/money'
 
 ```ruby
 gem 'nokogiri'
-gem 'rspec'
+gem 'rspec' #для тестов
 ```
 Затем запустите bundle: 
 
