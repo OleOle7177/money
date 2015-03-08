@@ -43,7 +43,6 @@ module Money
 		currencyto = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", to.id, datetime).order('created_at DESC').first
 
 		(currencyfrom.rate/currencyto.rate).to_f.round(4) 
-
 	end
 end
 

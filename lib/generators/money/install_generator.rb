@@ -9,18 +9,7 @@ module Money
 
 	source_root File.expand_path("../templates", __FILE__)
 
-    desc "Some description of my generator here"
-
-    # Commandline options can be defined here using Thor-like options:
-    #class_option :my_opt, :type => :boolean, :default => false, :desc => "My Option"
-
-    # I can later access that option using:
-    # options[:my_opt]
-
-
-    #def self.source_root
-    #  @source_root ||= File.join(File.dirname(__FILE__), 'templates')
-    #end
+    desc "Copy migrations, models and tasks to application"
 
     def self.next_migration_number(path)
     	ActiveRecord::Generators::Base.next_migration_number(path)
