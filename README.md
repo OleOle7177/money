@@ -4,7 +4,7 @@
 
 ## Установка
 
-Добавьте эту строку в Gemfile вашего приложения:
+Добавьте следующую строку в Gemfile вашего приложения:
 
 ```ruby
 gem 'money', git: 'https://github.com/OleOle7177/money' 
