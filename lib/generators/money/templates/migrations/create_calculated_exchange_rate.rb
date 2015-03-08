@@ -8,5 +8,7 @@ class CreateCalculatedExchangeRate < ActiveRecord::Migration
     	t.datetime :created_at
     	t.string :created_by
     end
+
+    add_index :calculated_exchange_rates, [:from_currency_id, :created_at], unique: true 
   end
 end
