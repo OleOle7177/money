@@ -7,7 +7,7 @@
 Добавьте следующую строку в Gemfile вашего приложения:
 
 ```ruby
-gem 'money_oleole7177'
+gem 'money', git: 'https://github.com/OleOle7177/money'
 ```
 Затем запустите bundle: 
 
