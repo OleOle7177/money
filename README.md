@@ -7,13 +7,7 @@
 Добавьте следующую строку в Gemfile вашего приложения:
 
 ```ruby
-gem 'money', git: 'https://github.com/OleOle7177/money' 
-```
-Зависимости гема: 
-
-```ruby
-gem 'nokogiri'
-gem 'rspec' #для тестов
+gem 'money_oleole7177'
 ```
 Затем запустите bundle: 
 
