@@ -34,12 +34,17 @@ module Money
 		to = options[:to] ? Currency.find_by_code(options[:to]) : Currency.find_by_is_base(true)
 		datetime = options[:datetime] ? options[:datetime] : DateTime.now
 
-		unless from.id == to.id  
+		if from.id == to.id
+			1.0
+		elsif to.code == get_base 
+			CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", from.id, datetime).last.rate
+		elsif from.code == get_base
+			currencyto = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", to.id, datetime).last
+			(1/currencyto.rate).to_f.round(4) 						
+		else
 			currencyfrom = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", from.id, datetime).last
 			currencyto = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", to.id, datetime).last
 			(currencyfrom.rate/currencyto.rate).to_f.round(4) 
-		else
-			1.0
 		end
 	end
 end
