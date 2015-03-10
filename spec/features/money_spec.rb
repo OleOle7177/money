@@ -31,8 +31,7 @@ describe Money do
   end
 
   it "calculate calculates curriences for all valutes" do 
-    Money.calculate
-    expect(CalculatedExchangeRate.count).to eq(3)
+    expect { Money.calculate }.to change {CalculatedExchangeRate.count}.by(2)
   end
 
   it "get_currency works correct" do   
@@ -44,6 +43,10 @@ describe Money do
     Money.set_currency(from: 'USD', rate: 2.0)
     Money.set_currency(from: 'GBP', rate: 0.5)
     expect(Money.get_currency(from: 'USD', to: 'GBP')).to eq(4.0)
+  end
+
+  it "database doesn't have valute rate to itself" do
+    expect(CalculatedExchangeRate.where("from_currency_id == to_currency_id").count).to eq(0)
   end
 
 end
