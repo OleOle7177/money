@@ -1,4 +1,5 @@
 task :getcbrates => :environment do 
+    require 'nokogiri'
     require 'open-uri'
      # get the XML data form CB URL
     file_handle = open('http://www.cbr.ru/scripts/XML_daily.asp')
