@@ -7,7 +7,6 @@ module Money
 	def self.set_base(sym)	 
 		currency = Currency.find_by_code(sym)
 		unless (currency.nil? || get_base == sym)
-		  Currency.where(is_base: true).update_all(is_base: false)
 		  currency.is_base = true
 		  currency.save
 		end	
@@ -15,22 +14,18 @@ module Money
 
 	def self.set_currency(options = {}) 
 		from = Currency.find_by_code(options[:from])
-		to = Currency.find_by_is_base(true)
-		#to = options[:to] ? Currency.find_by_symbol(options[:to]) : Currency.find_by_is_base(true)
+		to = Currency.find_by_is_base(true)		
 		rate = options[:rate]
-		unless from.id == to.id  
-			CalculatedExchangeRate.create(from_currency_id: from.id, to_currency_id: to.id, rate: rate) 
-		else 
-			CalculatedExchangeRate.create(from_currency_id: from.id, to_currency_id: to.id, rate: 1.0) 
-		end
+		CalculatedExchangeRate.create(from_currency_id: from.id, to_currency_id: to.id, rate: rate) unless from.id == to.id 
 	end
-
 
 	def self.calculate
 		base = Currency.find_by_is_base(true)
-		@curriencies = Currency.all.includes(:ExchangeRate)
+		cur_base = base.exchange_rates.last
+		@curriencies = Currency.all.includes(:exchange_rates)
 		@curriencies.each do |cur|
-			set_currency(from: cur.code, to: base.code, rate: (cur.ExchangeRate.rate/base.ExchangeRate.rate).to_f.round(4))
+			cur_from = cur.exchange_rates.last			
+			set_currency(from: cur.code, rate: (cur_from.rate/cur_base.rate).to_f.round(4))
 		end
 	end
 
@@ -39,10 +34,13 @@ module Money
 		to = options[:to] ? Currency.find_by_code(options[:to]) : Currency.find_by_is_base(true)
 		datetime = options[:datetime] ? options[:datetime] : DateTime.now
 
-		currencyfrom = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", from.id, datetime).order('created_at DESC').first
-		currencyto = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", to.id, datetime).order('created_at DESC').first
-
-		(currencyfrom.rate/currencyto.rate).to_f.round(4) 
+		unless from.id == to.id  
+			currencyfrom = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", from.id, datetime).last
+			currencyto = CalculatedExchangeRate.where("from_currency_id = ? and created_at < ?", to.id, datetime).last
+			(currencyfrom.rate/currencyto.rate).to_f.round(4) 
+		else
+			1.0
+		end
 	end
 end
 

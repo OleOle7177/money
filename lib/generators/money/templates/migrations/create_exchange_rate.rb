@@ -7,6 +7,6 @@ class CreateExchangeRate < ActiveRecord::Migration
     	t.datetime :created_at 
     end
 
-    add_index :exchange_rates, :currency_id, unique: true
+    add_index :exchange_rates, [:currency_id, :created_at], unique: true
   end
 end
