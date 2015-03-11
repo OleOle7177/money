@@ -9,6 +9,7 @@ module Money
 		unless (currency.nil? || get_base == sym)
 		  currency.is_base = true
 		  currency.save
+		  calculate
 		end	
 	end
 
