@@ -1,5 +1,5 @@
 class ExchangeRate < ActiveRecord::Base
-	belongs_to :currency 
+  belongs_to :currency 
 
-	validates :currency_id, :rate, presence: true	
+  validates :currency_id, :rate, presence: true	
 end
