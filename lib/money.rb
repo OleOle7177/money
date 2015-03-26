@@ -3,7 +3,6 @@ module Money
   #узнать текущую базовую валюту, возвращается экземпляр класса Currency 
   def self.get_base
     valute = Currency.find_by_is_base(true) 
-    puts "Базовая валюта не установлена" unless valute   
     valute
   end
 
@@ -43,7 +42,7 @@ module Money
     else
       #если в ExchangeRates нет данных о курсе базовой валюты относительно рубля       
       raise "Курсы валют не могут быть рассчитаны: 
-           нет данных о курсе базовой валюты относительно рубля" unless base.exchange_rates.last
+             нет данных о курсе базовой валюты относительно рубля" unless base.exchange_rates.last
 
       cur_base_rate = base.exchange_rates.last.rate 
     end
@@ -57,7 +56,7 @@ module Money
           cur_from_rate = 1
         else 
           raise "Курсы валют не могут быть рассчитаны: 
-               нет данных о курсе валюты #{cur.code}: #{cur.name} относительно рубля" unless cur.exchange_rates.last 
+                 нет данных о курсе валюты #{cur.code}: #{cur.name} относительно рубля" unless cur.exchange_rates.last 
           cur_from_rate = cur.exchange_rates.last.rate
         end                
       

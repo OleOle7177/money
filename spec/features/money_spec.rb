@@ -6,7 +6,7 @@ describe Money do
   before(:all) do 
     Currency.find_or_create_by(name: "US Dollar", code: "USD", is_base: true, symbol: "$")
     Currency.find_or_create_by(name: "Euro", code: "EUR", is_base: false, symbol: "E")
-    Currency.find_or_create_by(name: "English", code: "GBP", is_base: false, symbol: "R")
+    Currency.find_or_create_by(name: "English", code: "GBP", is_base: false, symbol: "G")
   end
 
   after(:all) do
