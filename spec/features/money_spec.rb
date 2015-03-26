@@ -22,12 +22,12 @@ describe Money do
   end
 
   it "get_base returns base valute" do
-    expect(Money.get_base).to eq('USD')
+    expect(Money.get_base.code).to eq('USD')
   end
 
   it "set_base sets base valute" do 
     Money.set_base('EUR')
-    expect(Money.get_base).to eq('EUR')
+    expect(Money.get_base.code).to eq('EUR')
   end
 
   it "calculate calculates curriences for all valutes" do 
@@ -51,9 +51,27 @@ describe Money do
 
   context "when base valute is not set" do
     it "doesn't calculate currencies" do
-      Currency.where(is_base: true).destroy_all
+      Currency.where(is_base: true).update_all(is_base: false)
       expect{Money.calculate}.to raise_error
+      expect(Money.get_base).to be_nil      
     end
   end
-  
+
+  context "create new valute that not exists in reality" do
+       
+    it "it's currency is equal to base" do
+      Money.set_base('EUR') 
+      Currency.find_or_create_by(code: 'MVR', name: 'Mavr', symbol: 'M')        
+      expect(Money.get_currency('MVR')).to eq(1.0)
+    end
+
+    it "works as other valutes" do 
+      expect{Money.get_currency('MVR', to: 'USD')}.not_to raise_error
+    end 
+
+    it "raises error if valute is set to base" do 
+      expect { Money.set_base('MVR') }.to raise_error       
+    end
+  end
+
 end

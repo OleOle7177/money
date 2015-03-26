@@ -2,7 +2,8 @@ module Money
 
   #узнать текущую базовую валюту, возвращается экземпляр класса Currency 
   def self.get_base
-    valute = Currency.find_by_is_base(true)    
+    valute = Currency.find_by_is_base(true) 
+    puts "Базовая валюта не установлена" unless valute   
     valute
   end
 
